@@ -12,9 +12,9 @@ public class ProductDto {
     private Long componentlist_id;
     private String brand;
     private String model;
-    private int voltege;
+    private int voltage;
     private int power;
     private String protocol;
-    private double price;
     private int current;
+    private double price;
 }

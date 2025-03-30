@@ -20,11 +20,11 @@ public class ProductMapper {
                 productDto.getComponentlist_id(),
                 productDto.getBrand(),
                 productDto.getModel(),
-                productDto.getVoltege(),
+                productDto.getVoltage(),
                 productDto.getPower(),
                 productDto.getProtocol(),
-                productDto.getPrice(),
-                productDto.getCurrent());
+                productDto.getCurrent(),
+                productDto.getPrice());
     }
 
     public ProductDto mapToProductDto (final Product product) {
@@ -32,11 +32,11 @@ public class ProductMapper {
                 product.getComponentlist_id(),
                 product.getBrand(),
                 product.getModel(),
-                product.getVoltege(),
+                product.getVoltage(),
                 product.getPower(),
                 product.getProtocol(),
-                product.getPrice(),
-                product.getCurrent());
+                product.getCurrent(),
+                product.getPrice());
     }
 }
 

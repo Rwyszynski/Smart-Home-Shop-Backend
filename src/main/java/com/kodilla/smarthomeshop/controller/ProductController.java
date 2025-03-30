@@ -6,11 +6,9 @@ import com.kodilla.smarthomeshop.mapper.ProductMapper;
 import com.kodilla.smarthomeshop.repository.ProductRepository;
 import com.kodilla.smarthomeshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,6 +19,7 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
@@ -28,6 +27,13 @@ public class ProductController {
     public ResponseEntity<List<ProductDto>> getAllProducts() {
         List<Product> products = productService.getAllProducts();
         return ResponseEntity.ok(productMapper.mapToProductDtoList(products));
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createProduct(@RequestBody ProductDto productDto) {
+        Product product = productMapper.mapToProduct(productDto);
+        productService.save(product);
+        return ResponseEntity.ok().build();
     }
 
 }
