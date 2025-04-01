@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.mapper;
 import com.kodilla.smarthomeshop.domain.Product;
 import com.kodilla.smarthomeshop.domain.ProductDto;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service

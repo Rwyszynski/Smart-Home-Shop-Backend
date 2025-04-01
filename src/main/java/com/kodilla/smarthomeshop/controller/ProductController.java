@@ -9,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -19,7 +18,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
@@ -29,6 +27,11 @@ public class ProductController {
         return ResponseEntity.ok(productMapper.mapToProductDtoList(products));
     }
 
+    @GetMapping(value = "/{productId}")
+    public ResponseEntity<ProductDto> getProductById(@PathVariable Long productId) throws ProductNotFoundException {
+        return ResponseEntity.ok(productMapper.mapToProductDto(productService.getProduct(productId)));
+    }
+
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createProduct(@RequestBody ProductDto productDto) {
         Product product = productMapper.mapToProduct(productDto);
@@ -36,4 +39,16 @@ public class ProductController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+        Product product = productMapper.mapToProduct(productDto);
+        Product savedProduct = productService.save(product);
+        return ResponseEntity.ok(productMapper.mapToProductDto(savedProduct));
+    }
+
+    @DeleteMapping(value = "/{productId}")
+    public ResponseEntity<String> deleteProduct(@PathVariable Long productId) throws ProductNotFoundException {
+        productService.deleteProduct(productId);
+        return ResponseEntity.ok("Deleted product with id " + productId);
+    }
 }
