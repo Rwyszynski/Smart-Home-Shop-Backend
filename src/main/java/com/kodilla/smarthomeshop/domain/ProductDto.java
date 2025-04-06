@@ -9,7 +9,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class ProductDto {
 
-    private Long componentlist_id;
+    private Long component_id;
     private String brand;
     private String model;
     private int voltage;
@@ -17,4 +17,5 @@ public class ProductDto {
     private String protocol;
     private int current;
     private double price;
+    private String url;
 }

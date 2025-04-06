@@ -6,24 +6,18 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
-@Entity(name = "orders")
-public class Order {
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Entity(name = "productList")
+public class ProductList {
 
     @Id
     @GeneratedValue
-    private Long orderId;
+    private Long pdId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @OneToOne
-    @JoinColumn(name = "productList", nullable = false, unique = true)
-    private ProductList productList;
-    private String orderStatus;
-    private String orderDate;
 }

@@ -17,11 +17,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product save(Product product) {return productRepository.save(product);}
-
     public Product getProduct(Long id) throws ProductNotFoundException {
         return productRepository.findById(id).orElseThrow(ProductNotFoundException::new);
     }
+
+    public Product save(Product product) {return productRepository.save(product);}
 
     public void deleteProduct(Long productId) throws ProductNotFoundException {
         productRepository.deleteById(productId);

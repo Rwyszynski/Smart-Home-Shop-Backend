@@ -14,7 +14,7 @@ public class Product {
 
     @Id
     @GeneratedValue
-    private Long componentlist_id;
+    private Long component_id;
     private String brand;
     private String model;
     private int voltage;
@@ -22,6 +22,7 @@ public class Product {
     private String protocol;
     private int current;
     private double price;
+    private String url;
 }
 
 

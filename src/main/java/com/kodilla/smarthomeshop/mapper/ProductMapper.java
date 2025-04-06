@@ -16,26 +16,28 @@ public class ProductMapper {
 
     public Product mapToProduct (final ProductDto productDto) {
         return new Product(
-                productDto.getComponentlist_id(),
+                productDto.getComponent_id(),
                 productDto.getBrand(),
                 productDto.getModel(),
                 productDto.getVoltage(),
                 productDto.getPower(),
                 productDto.getProtocol(),
                 productDto.getCurrent(),
-                productDto.getPrice());
+                productDto.getPrice(),
+                productDto.getUrl());
     }
 
     public ProductDto mapToProductDto (final Product product) {
         return new ProductDto(
-                product.getComponentlist_id(),
+                product.getComponent_id(),
                 product.getBrand(),
                 product.getModel(),
                 product.getVoltage(),
                 product.getPower(),
                 product.getProtocol(),
                 product.getCurrent(),
-                product.getPrice());
+                product.getPrice(),
+                product.getUrl());
     }
 }
 
