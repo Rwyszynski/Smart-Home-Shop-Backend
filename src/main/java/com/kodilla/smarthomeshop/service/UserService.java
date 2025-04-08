@@ -7,7 +7,7 @@ import com.kodilla.smarthomeshop.domain.User;
 import com.kodilla.smarthomeshop.repository.RoleRepository;
 import com.kodilla.smarthomeshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
@@ -16,13 +16,13 @@ import java.util.List;
 public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     public void saveUser(RegistrationDto registrationDto) {
@@ -31,7 +31,7 @@ public class UserService {
         user.setUserSurname(registrationDto.getUserName());
         user.setEmail(registrationDto.getEmail());
         user.setAddress(registrationDto.getAddress());
-        user.setPassword(passwordEncoder.encode(registrationDto.getPassword()));
+        user.setPassword(registrationDto.getPassword());
 
         Role role = roleRepository.findByName("USER");
 
