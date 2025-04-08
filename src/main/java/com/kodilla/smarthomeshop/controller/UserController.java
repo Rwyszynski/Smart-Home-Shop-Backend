@@ -31,14 +31,14 @@ public class UserController {
     public ResponseEntity<UserDto> getUser(@PathVariable Long orderId) throws UserNotFoundException {
         return ResponseEntity.ok(userMapper.mapToUserDto(userService.getUser(orderId)));
     }
-
+/*
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
         userService.save(user);
         return ResponseEntity.ok().build();
     }
-
+*/
     @PutMapping
     public ResponseEntity<UserDto> updateUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
@@ -50,5 +50,11 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok("Deleted user with id " + userId);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+        userService.registerUser(userDto);
+        return ResponseEntity.ok().build();
     }
 }
