@@ -1,15 +1,12 @@
 package com.kodilla.smarthomeshop.service;
 
 import com.kodilla.smarthomeshop.controller.UserNotFoundException;
-import com.kodilla.smarthomeshop.domain.RegistrationDto;
-import com.kodilla.smarthomeshop.domain.Role;
 import com.kodilla.smarthomeshop.domain.User;
+import com.kodilla.smarthomeshop.domain.UserDto;
 import com.kodilla.smarthomeshop.repository.RoleRepository;
 import com.kodilla.smarthomeshop.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.stereotype.Component;
-import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -25,17 +22,15 @@ public class UserService {
 
     }
 
-    public void saveUser(RegistrationDto registrationDto) {
+    public void saveUser(UserDto userDto) {
         User user = new User();
-        user.setUserName(registrationDto.getUserName());
-        user.setUserSurname(registrationDto.getUserName());
-        user.setEmail(registrationDto.getEmail());
-        user.setAddress(registrationDto.getAddress());
-        user.setPassword(registrationDto.getPassword());
+        user.setUserId(userDto.getUserId());
+        user.setUserName(userDto.getUserName());
+        user.setUserSurname(userDto.getUserSurname());
+        user.setEmail(userDto.getEmail());
+        user.setAddress(userDto.getAddress());
+        user.setPassword(userDto.getPassword());
 
-        Role role = roleRepository.findByName("USER");
-
-        user.setRoles(Arrays.asList(role));
         userRepository.save(user);
     }
 

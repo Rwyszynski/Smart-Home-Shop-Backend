@@ -16,7 +16,6 @@ public class UserDto {
     private String email;
     private String address;
     private String password;
-    private List<Role> roles;
     private List<ProductList> productLists;
 
 }

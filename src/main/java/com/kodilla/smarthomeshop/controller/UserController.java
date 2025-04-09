@@ -32,11 +32,12 @@ public class UserController {
         return ResponseEntity.ok(userMapper.mapToUserDto(userService.getUser(orderId)));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createUser(@RequestBody UserDto userDto) {
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
-        userService.save(user);
-        return ResponseEntity.ok().build();
+        User savedUser = userService.save(user);
+        Long id = savedUser.getUserId();
+        return ResponseEntity.ok("Zarejestrowano użytkownika z ID " + id);
     }
 
     @PutMapping
@@ -50,5 +51,20 @@ public class UserController {
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
         return ResponseEntity.ok("Deleted user with id " + userId);
+    }
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto) {
+        User user = userService.findByEmail(userDto.getEmail());
+
+        if (user == null) {
+            return ResponseEntity.status(401).body(null);
+        }
+
+        if (!user.getPassword().equals(userDto.getPassword())) {
+            return ResponseEntity.status(401).body(null);
+        }
+
+        return ResponseEntity.ok(userMapper.mapToUserDto(user));
     }
 }
