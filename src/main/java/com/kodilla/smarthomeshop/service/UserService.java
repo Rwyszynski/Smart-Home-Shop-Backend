@@ -14,7 +14,6 @@ public class UserService {
     private UserRepository userRepository;
     private RoleRepository roleRepository;
 
-
     @Autowired
     public UserService(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -30,7 +29,6 @@ public class UserService {
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress());
         user.setPassword(userDto.getPassword());
-
         userRepository.save(user);
     }
 
@@ -41,7 +39,6 @@ public class UserService {
     public User findByUsername(String username) {
         return userRepository.findByEmail(username);
     }
-
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -58,6 +55,10 @@ public class UserService {
 
     public void deleteUser(Long userId) {
         userRepository.deleteById(userId);
+    }
+
+    public Integer getUserById(Long userId) {
+        return userId.intValue();
     }
 }
 

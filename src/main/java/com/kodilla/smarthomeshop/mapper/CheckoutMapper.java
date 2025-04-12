@@ -18,8 +18,8 @@ public class CheckoutMapper {
         return new Checkout(
                 checkoutDto.getCheckoutId(),
                 checkoutDto.getQuantity(),
-                checkoutDto.getProduct(),
-                checkoutDto.getProductList()
+                checkoutDto.getProductList(),
+                checkoutDto.getProduct()
         );
     }
 
@@ -27,8 +27,8 @@ public class CheckoutMapper {
         return new CheckoutDto(
                 checkout.getCheckoutId(),
                 checkout.getQuantity(),
-                checkout.getProduct(),
-                checkout.getProductList()
+                checkout.getProductList(),
+                checkout.getProduct()
         );
     }
 }

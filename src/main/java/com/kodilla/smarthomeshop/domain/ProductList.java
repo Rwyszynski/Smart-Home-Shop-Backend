@@ -1,23 +1,27 @@
 package com.kodilla.smarthomeshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
+@Setter
 @Entity(name = "productList")
 public class ProductList {
 
     @Id
     @GeneratedValue
-    private Long pdId;
+    private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Integer userId;
+
+    @OneToMany(mappedBy = "productList", cascade = CascadeType.PERSIST, orphanRemoval = true)
+    @JsonIgnore
+    private List<Checkout> checkoutIds = new ArrayList<>();
 }

@@ -11,6 +11,6 @@ public class CheckoutDto {
 
     private int checkoutId;
     private int quantity;
-    private Product product;
     private ProductList productList;
+    private Product product;
 }

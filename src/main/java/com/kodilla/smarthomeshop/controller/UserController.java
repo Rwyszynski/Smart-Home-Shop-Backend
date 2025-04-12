@@ -60,7 +60,6 @@ public class UserController {
         if (user == null) {
             return ResponseEntity.status(401).body(null);
         }
-
         if (!user.getPassword().equals(userDto.getPassword())) {
             return ResponseEntity.status(401).body(null);
         }

@@ -21,6 +21,6 @@ public class User {
     private String address;
     private String password;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
     private List<ProductList> productLists;
 }

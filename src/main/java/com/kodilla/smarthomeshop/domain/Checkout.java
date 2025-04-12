@@ -1,16 +1,15 @@
 package com.kodilla.smarthomeshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @Getter
-@Entity(name="checkout")
+@Setter
+@Entity(name = "checkout")
 public class Checkout {
 
     @Id
@@ -19,12 +18,13 @@ public class Checkout {
     private int quantity;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "productId", nullable = false)
-    private Product product;
+    @JoinColumn(name = "product_list_id")
+    @JsonIgnore
+    private ProductList productList;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "productList", nullable = false)
-    private ProductList productList;
+    @JoinColumn(name = "product_id")
+    private Product product;
 }
 
 
