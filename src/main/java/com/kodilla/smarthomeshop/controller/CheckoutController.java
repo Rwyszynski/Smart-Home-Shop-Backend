@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.controller;
 import com.kodilla.smarthomeshop.domain.Checkout;
 import com.kodilla.smarthomeshop.domain.CheckoutDto;
 import com.kodilla.smarthomeshop.mapper.CheckoutMapper;
-import com.kodilla.smarthomeshop.repository.CheckoutRepository;
 import com.kodilla.smarthomeshop.service.CheckoutService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.util.List;
 public class CheckoutController {
 
     private final CheckoutService checkoutService;
-    private final CheckoutRepository checkoutRepository;
     private final CheckoutMapper checkoutMapper;
 
     @GetMapping
@@ -35,21 +33,21 @@ public class CheckoutController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createCheckout(@RequestBody CheckoutDto checkoutDto) {
         Checkout checkout = checkoutMapper.mapToCheckout(checkoutDto);
-        checkoutRepository.save(checkout);
+        checkoutService.saveCheckout(checkout);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<CheckoutDto> updateCheckout(@RequestBody CheckoutDto checkoutDto) {
         Checkout checkout = checkoutMapper.mapToCheckout(checkoutDto);
-        Checkout savedCheckout = checkoutService.save(checkout);
+        Checkout savedCheckout = checkoutService.saveCheckout(checkout);
         return ResponseEntity.ok(checkoutMapper.mapToCheckoutDto(savedCheckout));
     }
 
     @DeleteMapping(value = "/{checkoutId}")
     public ResponseEntity<String> deleteCheckout(@PathVariable Long checkoutId) throws CheckoutNotFoundException {
         checkoutService.deleteProduct(checkoutId);
-        return ResponseEntity.ok("Deleted checkout with id " + checkoutId);
+        return ResponseEntity.ok("Usunięto checkout z id  " + checkoutId);
     }
 
     @PostMapping("/fromProduct/{productId}")

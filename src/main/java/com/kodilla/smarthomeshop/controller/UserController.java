@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.controller;
 import com.kodilla.smarthomeshop.domain.User;
 import com.kodilla.smarthomeshop.domain.UserDto;
 import com.kodilla.smarthomeshop.mapper.UserMapper;
-import com.kodilla.smarthomeshop.repository.UserRepository;
 import com.kodilla.smarthomeshop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final UserRepository userRepository;
     private final UserMapper userMapper;
 
     @GetMapping
@@ -50,7 +48,7 @@ public class UserController {
     @DeleteMapping(value = "/{userId}")
     public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
-        return ResponseEntity.ok("Deleted user with id " + userId);
+        return ResponseEntity.ok("Usunięto użytkownika z id " + userId);
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -63,7 +61,6 @@ public class UserController {
         if (!user.getPassword().equals(userDto.getPassword())) {
             return ResponseEntity.status(401).body(null);
         }
-
         return ResponseEntity.ok(userMapper.mapToUserDto(user));
     }
 }

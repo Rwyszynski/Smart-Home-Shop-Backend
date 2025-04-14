@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.controller;
 import com.kodilla.smarthomeshop.domain.Product;
 import com.kodilla.smarthomeshop.domain.ProductDto;
 import com.kodilla.smarthomeshop.mapper.ProductMapper;
-import com.kodilla.smarthomeshop.repository.ProductRepository;
 import com.kodilla.smarthomeshop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
-    private final ProductRepository productRepository;
     private final ProductMapper productMapper;
 
     @GetMapping
@@ -49,6 +47,6 @@ public class ProductController {
     @DeleteMapping(value = "/{productId}")
     public ResponseEntity<String> deleteProduct(@PathVariable Long productId) throws ProductNotFoundException {
         productService.deleteProduct(productId);
-        return ResponseEntity.ok("Deleted product with id " + productId);
+        return ResponseEntity.ok("Usunięto produkt z id " + productId);
     }
 }

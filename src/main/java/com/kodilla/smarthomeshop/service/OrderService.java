@@ -3,15 +3,15 @@ package com.kodilla.smarthomeshop.service;
 import com.kodilla.smarthomeshop.controller.OrderNotFoundException;
 import com.kodilla.smarthomeshop.domain.Order;
 import com.kodilla.smarthomeshop.repository.OrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();

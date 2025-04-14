@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.controller;
 import com.kodilla.smarthomeshop.domain.Order;
 import com.kodilla.smarthomeshop.domain.OrderDto;
 import com.kodilla.smarthomeshop.mapper.OrderMapper;
-import com.kodilla.smarthomeshop.repository.OrderRepository;
 import com.kodilla.smarthomeshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,7 +17,6 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
-    private final OrderRepository orderRepository;
     private final OrderMapper orderMapper;
 
     @GetMapping
@@ -49,6 +47,6 @@ public class OrderController {
     @DeleteMapping(value = "/{orderId}")
     public ResponseEntity<String> deleteOrder(@PathVariable Long orderId) {
         orderService.deleteProduct(orderId);
-        return ResponseEntity.ok("Deleted order with id " + orderId);
+        return ResponseEntity.ok("Usunięto zamówienie z id  " + orderId);
     }
 }

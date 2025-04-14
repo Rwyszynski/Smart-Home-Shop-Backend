@@ -3,15 +3,15 @@ package com.kodilla.smarthomeshop.service;
 import com.kodilla.smarthomeshop.controller.ProductNotFoundException;
 import com.kodilla.smarthomeshop.domain.Product;
 import com.kodilla.smarthomeshop.repository.ProductRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Service
 public class ProductService {
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
 
     public List<Product> getAllProducts() {
         return productRepository.findAll();

@@ -2,42 +2,19 @@ package com.kodilla.smarthomeshop.service;
 
 import com.kodilla.smarthomeshop.controller.UserNotFoundException;
 import com.kodilla.smarthomeshop.domain.User;
-import com.kodilla.smarthomeshop.domain.UserDto;
-import com.kodilla.smarthomeshop.repository.RoleRepository;
 import com.kodilla.smarthomeshop.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import java.util.List;
 
+@RequiredArgsConstructor
 @Component
 public class UserService {
-    private UserRepository userRepository;
-    private RoleRepository roleRepository;
 
-    @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository) {
-        this.userRepository = userRepository;
-        this.roleRepository = roleRepository;
-
-    }
-
-    public void saveUser(UserDto userDto) {
-        User user = new User();
-        user.setUserId(userDto.getUserId());
-        user.setUserName(userDto.getUserName());
-        user.setUserSurname(userDto.getUserSurname());
-        user.setEmail(userDto.getEmail());
-        user.setAddress(userDto.getAddress());
-        user.setPassword(userDto.getPassword());
-        userRepository.save(user);
-    }
+    private final UserRepository userRepository;
 
     public User findByEmail(String email) {
         return userRepository.findByEmail(email);
-    }
-
-    public User findByUsername(String username) {
-        return userRepository.findByEmail(username);
     }
 
     public List<User> getAllUsers() {
@@ -50,7 +27,7 @@ public class UserService {
 
     public User save(User user) {
         User savedUser = userRepository.save(user);
-        return user;
+        return savedUser;
     }
 
     public void deleteUser(Long userId) {
