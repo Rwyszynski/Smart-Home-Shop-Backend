@@ -56,5 +56,6 @@ public class CheckoutController {
     public ResponseEntity<CheckoutDto> createCheckoutFromProductList(@PathVariable Long productListId) {
         Checkout createdCheckout = checkoutService.createCheckoutFromProductList(productListId);
         return ResponseEntity.ok(checkoutMapper.mapToCheckoutDto(createdCheckout));
+
     }
 }
