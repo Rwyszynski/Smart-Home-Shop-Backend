@@ -52,10 +52,9 @@ public class CheckoutController {
         return ResponseEntity.ok("Deleted checkout with id " + checkoutId);
     }
 
-    @PostMapping("/fromProductList/{productListId}")
-    public ResponseEntity<CheckoutDto> createCheckoutFromProductList(@PathVariable Long productListId) {
-        Checkout createdCheckout = checkoutService.createCheckoutFromProductList(productListId);
+    @PostMapping("/fromProduct/{productId}")
+    public ResponseEntity<CheckoutDto> createCheckoutFromProduct(@PathVariable Long productId) {
+        Checkout createdCheckout = checkoutService.createCheckoutFromProduct(productId);
         return ResponseEntity.ok(checkoutMapper.mapToCheckoutDto(createdCheckout));
-
     }
 }

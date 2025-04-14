@@ -47,18 +47,19 @@ public class CheckoutService {
         checkoutRepository.deleteById(id);
     }
 
-    public Checkout createCheckoutFromProductList(Long productId) {
-
+    public Checkout createCheckoutFromProduct(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + productId));
 
         User user = userRepository.findAll().get(0);
         ProductList productList = new ProductList();
         productList.setUserId(userService.getUserById(user.getUserId()));
+
         Checkout checkout = new Checkout();
         checkout.setProductList(productList);
         checkout.setProduct(product);
         checkout.setQuantity(1);
+
         productList.getCheckoutIds().add(checkout);
         productListRepository.save(productList);
         return checkoutRepository.save(checkout);
