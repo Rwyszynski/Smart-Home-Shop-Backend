@@ -13,4 +13,9 @@ public class CheckoutDto {
     private int quantity;
     private ProductList productList;
     private Product product;
+    private boolean isOrdered;
+
+    public boolean getIsOrdered() {
+        return isOrdered;
+    }
 }

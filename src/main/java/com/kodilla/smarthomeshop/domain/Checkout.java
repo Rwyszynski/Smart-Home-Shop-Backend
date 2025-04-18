@@ -25,6 +25,12 @@ public class Checkout {
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "product_id")
     private Product product;
+
+    private boolean isOrdered;
+
+    public boolean getIsOrdered() {
+        return isOrdered;
+    }
 }
 
 

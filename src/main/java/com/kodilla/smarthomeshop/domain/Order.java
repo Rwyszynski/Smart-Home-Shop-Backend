@@ -1,11 +1,9 @@
 package com.kodilla.smarthomeshop.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -19,10 +17,10 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private User userId;
 
-    @OneToOne
-    @JoinColumn(name = "productList", nullable = false, unique = true)
+    @OneToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "product_list_id", nullable = false)
     private ProductList productList;
     private String orderStatus;
     private String orderDate;

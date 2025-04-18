@@ -19,7 +19,8 @@ public class CheckoutMapper {
                 checkoutDto.getCheckoutId(),
                 checkoutDto.getQuantity(),
                 checkoutDto.getProductList(),
-                checkoutDto.getProduct()
+                checkoutDto.getProduct(),
+                checkoutDto.getIsOrdered()
         );
     }
 
@@ -28,7 +29,8 @@ public class CheckoutMapper {
                 checkout.getCheckoutId(),
                 checkout.getQuantity(),
                 checkout.getProductList(),
-                checkout.getProduct()
+                checkout.getProduct(),
+                checkout.getIsOrdered()
         );
     }
 }

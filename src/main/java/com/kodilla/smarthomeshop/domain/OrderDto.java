@@ -10,8 +10,12 @@ import lombok.Getter;
 public class OrderDto {
 
     private Long orderId;
-    private User user;
+    private User userId;
     private ProductList productList;
     private String orderStatus;
     private String orderDate;
+
+    public Long getProductListId() {
+        return productList.getId();
+    }
 }

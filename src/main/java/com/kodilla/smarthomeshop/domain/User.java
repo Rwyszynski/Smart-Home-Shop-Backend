@@ -2,6 +2,8 @@ package com.kodilla.smarthomeshop.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @EqualsAndHashCode
@@ -21,6 +23,6 @@ public class User {
     private String address;
     private String password;
 
-    @OneToMany(mappedBy = "userId", cascade = CascadeType.ALL)
-    private List<ProductList> productLists;
+    @Transient
+    private List<ProductList> productLists = new ArrayList<>();
 }

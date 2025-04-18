@@ -5,10 +5,10 @@ import com.kodilla.smarthomeshop.domain.OrderDto;
 import com.kodilla.smarthomeshop.mapper.OrderMapper;
 import com.kodilla.smarthomeshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/v1/orders")
 @CrossOrigin("*")
@@ -30,11 +30,12 @@ public class OrderController {
         return ResponseEntity.ok(orderMapper.mapToOrderDto(orderService.getOrder(orderId)));
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createOrder(@RequestBody OrderDto orderDto) {
-        Order order = orderMapper.mapToOrder(orderDto);
-        orderService.save(order);
-        return ResponseEntity.ok().build();
+    @PostMapping
+    public ResponseEntity<OrderDto> createOrder(@RequestBody Map<String, Long> payload) throws UserNotFoundException {
+        Long checkoutId = payload.get("checkoutId");
+        Order order = orderService.createOrderFromCheckout(checkoutId);
+        OrderDto orderDto = orderMapper.mapToOrderDto(order);
+        return ResponseEntity.ok(orderDto);
     }
 
     @PutMapping
@@ -48,5 +49,11 @@ public class OrderController {
     public ResponseEntity<String> deleteOrder(@PathVariable Long orderId) {
         orderService.deleteProduct(orderId);
         return ResponseEntity.ok("Usunięto zamówienie z id  " + orderId);
+    }
+
+    @PostMapping("/fromCheckout/{checkoutId}")
+    public ResponseEntity<OrderDto> createOrdertFromCheckout(@PathVariable Long checkoutId) throws UserNotFoundException {
+        Order createdOrder = orderService.createOrderFromCheckout(checkoutId);
+        return ResponseEntity.ok(orderMapper.mapToOrderDto(createdOrder));
     }
 }

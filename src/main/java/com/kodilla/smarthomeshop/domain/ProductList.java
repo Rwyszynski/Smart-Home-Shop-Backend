@@ -1,17 +1,16 @@
 package com.kodilla.smarthomeshop.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@EqualsAndHashCode
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity(name = "productList")
 @Getter
 @Setter
-@Entity(name = "productList")
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode
 public class ProductList {
 
     @Id
@@ -21,7 +20,9 @@ public class ProductList {
     @JoinColumn(name = "user_id", nullable = false)
     private Integer userId;
 
-    @OneToMany(mappedBy = "productList", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    @JsonIgnore
-    private List<Checkout> checkoutIds = new ArrayList<>();
+    @Column(nullable = false)
+    private boolean isActive;
+
+    @OneToMany(mappedBy = "productList", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Checkout> checkoutList = new ArrayList<>();
 }
