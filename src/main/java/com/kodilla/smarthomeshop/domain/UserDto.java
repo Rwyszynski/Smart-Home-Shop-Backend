@@ -3,7 +3,6 @@ package com.kodilla.smarthomeshop.domain;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import java.util.List;
 
 @AllArgsConstructor
 @Getter
@@ -16,6 +15,4 @@ public class UserDto {
     private String email;
     private String address;
     private String password;
-    private List<ProductList> productLists;
-
 }

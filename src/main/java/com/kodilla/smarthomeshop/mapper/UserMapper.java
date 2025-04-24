@@ -21,8 +21,7 @@ public class UserMapper {
             userDto.getUserSurname(),
             userDto.getEmail(),
             userDto.getAddress(),
-            userDto.getPassword(),
-            userDto.getProductLists()
+            userDto.getPassword()
         );
     }
 
@@ -33,8 +32,7 @@ public class UserMapper {
             user.getUserSurname(),
             user.getEmail(),
             user.getAddress(),
-            user.getPassword(),
-            user.getProductLists()
+            user.getPassword()
         );
     }
 }

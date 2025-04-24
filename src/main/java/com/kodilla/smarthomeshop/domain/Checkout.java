@@ -1,6 +1,5 @@
 package com.kodilla.smarthomeshop.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,20 +12,24 @@ import lombok.*;
 public class Checkout {
 
     @Id
-    @GeneratedValue
-    private int checkoutId;
-    private int quantity;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_list_id")
-    @JsonIgnore
-    private ProductList productList;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_id")
+    @ManyToOne
+    @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    private int quantity;
+
     private boolean isOrdered;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     public boolean getIsOrdered() {
         return isOrdered;

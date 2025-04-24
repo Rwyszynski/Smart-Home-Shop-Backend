@@ -16,21 +16,23 @@ public class CheckoutMapper {
 
     public Checkout mapToCheckout(CheckoutDto checkoutDto) {
         return new Checkout(
-                checkoutDto.getCheckoutId(),
-                checkoutDto.getQuantity(),
-                checkoutDto.getProductList(),
+                checkoutDto.getId(),
+                checkoutDto.getUser(),
                 checkoutDto.getProduct(),
-                checkoutDto.getIsOrdered()
+                checkoutDto.getQuantity(),
+                checkoutDto.getIsOrdered(),
+                checkoutDto.getOrder()
         );
     }
 
     public CheckoutDto mapToCheckoutDto(Checkout checkout) {
         return new CheckoutDto(
-                checkout.getCheckoutId(),
-                checkout.getQuantity(),
-                checkout.getProductList(),
+                checkout.getId(),
+                checkout.getUser(),
                 checkout.getProduct(),
-                checkout.getIsOrdered()
+                checkout.getQuantity(),
+                checkout.getIsOrdered(),
+                checkout.getOrder()
         );
     }
 }

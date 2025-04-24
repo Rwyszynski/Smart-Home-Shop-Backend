@@ -9,11 +9,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CheckoutDto {
 
-    private int checkoutId;
-    private int quantity;
-    private ProductList productList;
+    private Long id;
+    private User user;
     private Product product;
+    private int quantity;
     private boolean isOrdered;
+    private Order order;
 
     public boolean getIsOrdered() {
         return isOrdered;

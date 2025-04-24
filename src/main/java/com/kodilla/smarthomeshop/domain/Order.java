@@ -1,7 +1,10 @@
 package com.kodilla.smarthomeshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter
 @Getter
@@ -12,16 +15,17 @@ import lombok.*;
 public class Order {
 
     @Id
-    @GeneratedValue
-    private Long orderId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_id")
+    private Long OrderId;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User userId;
+    @Column(name = "user_id", nullable = false)
+    private Long userId;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "product_list_id", nullable = false)
-    private ProductList productList;
     private String orderStatus;
     private String orderDate;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Checkout> orderedItems = new ArrayList<>();
 }

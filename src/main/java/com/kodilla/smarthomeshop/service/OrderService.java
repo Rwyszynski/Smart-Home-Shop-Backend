@@ -6,9 +6,11 @@ import com.kodilla.smarthomeshop.domain.*;
 import com.kodilla.smarthomeshop.repository.CheckoutRepository;
 import com.kodilla.smarthomeshop.repository.OrderRepository;
 import com.kodilla.smarthomeshop.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -19,6 +21,7 @@ public class OrderService {
     private final CheckoutRepository checkoutRepository;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final CheckoutService checkoutService;
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();
@@ -36,21 +39,27 @@ public class OrderService {
         orderRepository.deleteById(orderId);
     }
 
-    public Order createOrderFromCheckout(Long checkoutId) throws UserNotFoundException {
-        Checkout checkout = checkoutRepository.findById(checkoutId)
-                .orElseThrow(() -> new RuntimeException("Nie znaleziono checkoutu: " + checkoutId));
+    @Transactional
+    public Order createOrderFromCheckout(Long userId) throws UserNotFoundException {
+        User user = userService.getUser(userId);
 
-        Integer userId = checkout.getProductList().getUserId();
-        User user = userService.getUser(checkoutId);
-        ProductList productList = new ProductList();
-        productList.setUserId(userId);
+        List<Checkout> checkoutList = checkoutRepository.findByUser(user);
+
+        if (checkoutList.isEmpty()) {
+            throw new IllegalStateException("Koszyk jest pusty. Nie można utworzyć zamówienia." + userId);
+        }
 
         Order order = new Order();
-        order.setUserId(user);
-        order.setProductList(productList);
+        order.setUserId(userId);
         order.setOrderStatus("Zamówione");
         order.setOrderDate(LocalDate.now().toString());
+        order.setOrderedItems(new ArrayList<>());
 
+        for (Checkout checkout : checkoutList) {
+            checkout.setOrder(order);
+            checkout.setOrdered(true);
+            order.getOrderedItems().add(checkout);
+        }
         return orderRepository.save(order);
     }
 }
