@@ -1,1 +1,2 @@
-rootProject.name = 'SmartHomeShop'
+rootProject.name = 'Smarthomeshop'
+include 'base', 'news'

@@ -46,7 +46,7 @@ public class OrderService {
         List<Checkout> checkoutList = checkoutRepository.findByUser(user);
 
         if (checkoutList.isEmpty()) {
-            throw new IllegalStateException("Koszyk jest pusty. Nie można utworzyć zamówienia." + userId);
+            throw new IllegalStateException("Koszyk jest pusty. Nie można utworzyć zamówienia.");
         }
 
         Order order = new Order();
