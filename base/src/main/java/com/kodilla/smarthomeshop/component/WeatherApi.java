@@ -1,38 +1,30 @@
 package com.kodilla.smarthomeshop.component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.util.UriComponentsBuilder;
+import java.net.URI;
 
+@Data
 public class WeatherApi {
 
-    private static final String API_URL = "http://api.weatherstack.com/current?access_key=13571dcff9c892ab30597f70669e9086&query=Warsaw";
+    private final RestTemplate restTemplate;
 
-    public static void main(String[] args) {
-        try {
-            URL url = new URL(API_URL);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestMethod("GET");
+    @Value("${weather.api.endpoint.prod}")
+    private String weatherApiEndpoint;
+    @Value("${weather.app.key}")
+    private String weatherAppKey;
 
-            if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                BufferedReader in = new BufferedReader(
-                        new InputStreamReader(conn.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String inputLine;
+    public String getTemperature() {
+        URI url = UriComponentsBuilder.fromHttpUrl(weatherApiEndpoint + "?access_key=")
+                .queryParam("key", weatherAppKey)
+                .build()
+                .encode()
+                .toUri();
+        String temperature = restTemplate.getForObject(url, String.class);
 
-                while ((inputLine = in.readLine()) != null) {
-                    response.append(inputLine);
-                }
-                in.close();
-
-            } else {
-                System.out.println("GET request failed. Response Code: " + conn.getResponseCode());
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        return temperature;
     }
 }
 
