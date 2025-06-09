@@ -2,10 +2,12 @@ package com.kodilla.smarthomeshop.component;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
+@Component
 @Data
 public class WeatherApi {
 

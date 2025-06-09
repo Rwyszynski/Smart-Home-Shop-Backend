@@ -11,9 +11,15 @@ public class CurrencyApi {
     private final RestTemplate restTemplate;
 
     public double getEuroExchangeRate() throws Exception {
-        double exchangeRate = restTemplate.getForObject(
-            "https://api.nbp.pl/api/exchangerates/rates/a/eur/?format=json", Double.class
+        CurrencyData data = restTemplate.getForObject(
+                "https://api.nbp.pl/api/exchangerates/rates/a/eur/?format=json",
+                CurrencyData.class
         );
-        return exchangeRate;
+
+        if (data != null && data.getRates() != null && !data.getRates().isEmpty()) {
+            return data.getRates().get(0).getMid();
+        } else {
+            throw new Exception("Brak danych o kursie euro");
+        }
     }
 }
