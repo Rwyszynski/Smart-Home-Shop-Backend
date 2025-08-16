@@ -12,8 +12,13 @@ public class WeatherController {
 
     private final WeatherApi weatherApi;
 
-    @GetMapping("/temperature")
+    @GetMapping
     public String getCurrentTemperature() {
+        return String.valueOf(weatherApi.getTemperature());
+    }
+
+    @GetMapping("/temperature")
+    public double getTemperatureOnly() {
         return weatherApi.getTemperature();
     }
 }
