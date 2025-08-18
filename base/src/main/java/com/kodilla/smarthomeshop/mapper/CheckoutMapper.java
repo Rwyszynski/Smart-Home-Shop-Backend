@@ -16,12 +16,12 @@ public class CheckoutMapper {
 
     public Checkout mapToCheckout(CheckoutDto checkoutDto) {
         return new Checkout(
-                checkoutDto.getId(),
-                checkoutDto.getUser(),
-                checkoutDto.getProduct(),
-                checkoutDto.getQuantity(),
-                checkoutDto.getIsOrdered(),
-                checkoutDto.getOrder()
+                checkoutDto.id(),
+                checkoutDto.user(),
+                checkoutDto.product(),
+                checkoutDto.quantity(),
+                checkoutDto.isOrdered(),
+                checkoutDto.order()
         );
     }
 

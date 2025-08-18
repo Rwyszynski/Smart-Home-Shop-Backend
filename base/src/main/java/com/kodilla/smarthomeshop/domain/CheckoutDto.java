@@ -1,22 +1,12 @@
 package com.kodilla.smarthomeshop.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
-@EqualsAndHashCode
-@Getter
-@AllArgsConstructor
-public class CheckoutDto {
+public record CheckoutDto(Long id,
+                          @NotNull
+                          @NotEmpty
+                          User user,
+                          Product product, int quantity, boolean isOrdered, Order order){
 
-    private Long id;
-    private User user;
-    private Product product;
-    private int quantity;
-    private boolean isOrdered;
-    private Order order;
-
-    public boolean getIsOrdered() {
-        return isOrdered;
-    }
 }

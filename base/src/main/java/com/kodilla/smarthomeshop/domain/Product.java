@@ -23,6 +23,7 @@ public class Product {
     private int current;
     private double price;
     private String url;
+    private Type type;
 }
 
 

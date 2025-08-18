@@ -8,6 +8,7 @@ import com.kodilla.smarthomeshop.repository.CheckoutRepository;
 import com.kodilla.smarthomeshop.repository.ProductRepository;
 import com.kodilla.smarthomeshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
@@ -21,12 +22,13 @@ public class CheckoutService {
     private final ProductRepository productRepository;
     private final UserService userService;
 
-    public List<Checkout> getAllCheckouts() {
-        return checkoutRepository.findAll();
+    public List<Checkout> getAllCheckouts(Pageable pageable) {
+        return checkoutRepository.findAll(pageable);
     }
 
     public Checkout getProduct(Long id) throws CheckoutNotFoundException {
-        return checkoutRepository.findById(id).orElseThrow(CheckoutNotFoundException::new);
+        return checkoutRepository.findById(id).orElseThrow(() ->
+                new CheckoutNotFoundException("Koszyk z id " + id + " nie znaleziono"));
     }
 
     public void deleteProduct(Long id) throws CheckoutNotFoundException {

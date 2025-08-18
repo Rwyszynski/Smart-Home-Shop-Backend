@@ -1,7 +1,6 @@
-package com.kodilla.smarthomeshop.controller;
+package com.kodilla.smarthomeshop.domain;
 
-import com.kodilla.smarthomeshop.domain.User;
-import com.kodilla.smarthomeshop.domain.UserDto;
+import com.kodilla.smarthomeshop.controller.UserNotFoundException;
 import com.kodilla.smarthomeshop.mapper.UserMapper;
 import com.kodilla.smarthomeshop.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +19,9 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public ResponseEntity<List<UserDto>> getAllUsers() {
+    public ResponseEntity<AllUsersDto> getAllUsers() {
         List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(userMapper.mapToUserDtoList(users));
+        return ResponseEntity.ok(new AllUsersDto(userMapper.mapToUserDtoList(users)));
     }
 
     @GetMapping(value = "/{orderId}")
@@ -31,11 +30,11 @@ public class UserController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
-    public ResponseEntity<String> createUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<UserSuccessfullyAdded> createUser(@RequestBody UserDto userDto) {
         User user = userMapper.mapToUser(userDto);
         User savedUser = userService.save(user);
         Long id = savedUser.getUserId();
-        return ResponseEntity.ok("Zarejestrowano użytkownika z ID " + id);
+        return ResponseEntity.ok(new UserSuccessfullyAdded("Zarejestrowano użytkownika z ID " + id));
     }
 
     @PutMapping
@@ -46,15 +45,14 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+    public ResponseEntity<UserSuccessfullyDeleted> deleteUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
-        return ResponseEntity.ok("Usunięto użytkownika z id " + userId);
+        return ResponseEntity.ok(new UserSuccessfullyDeleted( "Usunięto użytkownika z id " + userId));
     }
 
     @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserDto> login(@RequestBody UserDto userDto) {
         User user = userService.findByEmail(userDto.getEmail());
-
         if (user == null) {
             return ResponseEntity.status(401).body(null);
         }

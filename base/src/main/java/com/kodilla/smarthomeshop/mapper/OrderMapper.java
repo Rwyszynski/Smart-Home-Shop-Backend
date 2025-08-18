@@ -21,11 +21,11 @@ public class OrderMapper {
 
     public Order mapToOrder(OrderDto orderDto) {
         return new Order(
-                orderDto.getOrderId(),
-                orderDto.getUserId(),
-                orderDto.getOrderStatus(),
-                orderDto.getOrderDate(),
-                orderDto.getOrderedItems()
+                orderDto.OrderId(),
+                orderDto.userId(),
+                orderDto.orderStatus(),
+                orderDto.orderDate(),
+                orderDto.orderedItems()
         );
     }
 

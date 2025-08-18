@@ -22,7 +22,7 @@ public class UserService {
     }
 
     public User getUser(Long orderId) throws UserNotFoundException {
-        return userRepository.findById(orderId).orElseThrow();
+        return userRepository.findById(orderId).orElseThrow(() -> new UserNotFoundException("Nie znaleziono użytkownika"));
     }
 
     public User save(User user) {

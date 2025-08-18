@@ -3,6 +3,8 @@ package com.kodilla.smarthomeshop.repository;
 import com.kodilla.smarthomeshop.domain.Checkout;
 import com.kodilla.smarthomeshop.domain.Product;
 import com.kodilla.smarthomeshop.domain.User;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;
@@ -11,8 +13,8 @@ import java.util.Optional;
 @Repository
 public interface CheckoutRepository extends CrudRepository<Checkout, Long> {
 
-    @Override
-    List<Checkout> findAll();
+    @Query("SELECT c from checkout c")
+    List<Checkout> findAll(Pageable pageable);
 
     @Override
     Optional<Checkout> findById(Long id);
@@ -21,8 +23,6 @@ public interface CheckoutRepository extends CrudRepository<Checkout, Long> {
     Checkout save(Checkout checkout);
 
     Optional<Checkout> findByUserAndProductAndIsOrderedFalse(User user, Product product);
-
-    List<Checkout> findByUserAndIsOrderedFalse(User user);
 
     List<Checkout> findByUser(User user);
 }

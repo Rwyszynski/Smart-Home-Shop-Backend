@@ -1,15 +1,18 @@
 package com.kodilla.smarthomeshop.controller;
 
+import com.kodilla.smarthomeshop.domain.AllCheckoutDto;
 import com.kodilla.smarthomeshop.domain.Checkout;
 import com.kodilla.smarthomeshop.domain.CheckoutDto;
+import com.kodilla.smarthomeshop.domain.CheckoutSuccessfullyDeleted;
 import com.kodilla.smarthomeshop.mapper.CheckoutMapper;
 import com.kodilla.smarthomeshop.service.CheckoutService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-
 
 @RequestMapping("/v1/checkouts")
 @CrossOrigin("*")
@@ -21,9 +24,10 @@ public class CheckoutController {
     private final CheckoutMapper checkoutMapper;
 
     @GetMapping
-    public ResponseEntity<List<CheckoutDto>> getAllCheckouts() {
-        List<Checkout> checkouts = checkoutService.getAllCheckouts();
-        return ResponseEntity.ok(checkoutMapper.mapToCheckoutDtoList(checkouts));
+    public ResponseEntity<AllCheckoutDto> getAllCheckouts(@PageableDefault(page = 0, size = 10)
+                                                              @RequestParam(required = false) Pageable pageable) {
+        List<Checkout> checkouts = checkoutService.getAllCheckouts(pageable);
+        return ResponseEntity.ok(new AllCheckoutDto(checkoutMapper.mapToCheckoutDtoList(checkouts)));
     }
 
     @GetMapping(value = "/{checkoutId}")
@@ -32,10 +36,10 @@ public class CheckoutController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCheckout(@RequestBody CheckoutDto checkoutDto) {
+    public ResponseEntity<CheckoutDto> createCheckout(@RequestBody CheckoutDto checkoutDto) {
         Checkout checkout = checkoutMapper.mapToCheckout(checkoutDto);
         checkoutService.saveCheckout(checkout);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(checkoutDto);
     }
 
     @PutMapping
@@ -46,9 +50,9 @@ public class CheckoutController {
     }
 
     @DeleteMapping(value = "/{checkoutId}")
-    public ResponseEntity<String> deleteCheckout(@PathVariable Long checkoutId) throws CheckoutNotFoundException {
+    public ResponseEntity<CheckoutSuccessfullyDeleted> deleteCheckout(@PathVariable Long checkoutId) throws CheckoutNotFoundException {
         checkoutService.deleteProduct(checkoutId);
-        return ResponseEntity.ok("Usunięto checkout z id  " + checkoutId);
+        return ResponseEntity.ok(new CheckoutSuccessfullyDeleted("Usunięto Koszyk z id: " + checkoutId));
     }
 
     @PostMapping("/fromProduct/{productId}")
