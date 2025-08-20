@@ -1,8 +1,6 @@
 package com.kodilla.smarthomeshop.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 @NoArgsConstructor
@@ -23,6 +21,8 @@ public class Product {
     private int current;
     private double price;
     private String url;
+
+    @Enumerated(EnumType.STRING)
     private Type type;
 }
 

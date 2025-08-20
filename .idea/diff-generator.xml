@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DiffGenerationConfig">
+    <option name="snapshotDb" value="false" />
+    <option name="snapshotModelValue" value="Smarthomeshop.base.main:entityManagerFactory" />
+    <option name="sourceModelValue" value="Smarthomeshop.base.main:entityManagerFactory" />
+    <option name="targetDbValue" value="2131d24c-8621-4625-8873-227eaf6e959d" />
+  </component>
+</project>

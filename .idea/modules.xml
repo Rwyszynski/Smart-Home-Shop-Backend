@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Smarthomeshop.iml" filepath="$PROJECT_DIR$/.idea/modules/Smarthomeshop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/Smarthomeshop.base.main.iml" filepath="$PROJECT_DIR$/.idea/modules/base/Smarthomeshop.base.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/base/Smarthomeshop.base.test.iml" filepath="$PROJECT_DIR$/.idea/modules/base/Smarthomeshop.base.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/news/Smarthomeshop.news.main.iml" filepath="$PROJECT_DIR$/.idea/modules/news/Smarthomeshop.news.main.iml" />
     </modules>
   </component>
