@@ -9,10 +9,11 @@ import lombok.*;
 @Getter
 @Setter
 @Entity(name = "checkout")
-public class Checkout {
+public class Checkout extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "checkout_seq")
+    @SequenceGenerator(name = "checkout_seq", sequenceName = "checkout_seq", allocationSize = 1)
     private Long id;
 
     @ManyToOne
@@ -33,6 +34,14 @@ public class Checkout {
 
     public boolean getIsOrdered() {
         return isOrdered;
+    }
+
+    public Checkout(User user, Product product, int quantity, boolean isOrdered, Order order) {
+        this.user = user;
+        this.product = product;
+        this.quantity = quantity;
+        this.isOrdered = isOrdered;
+        this.order = order;
     }
 }
 

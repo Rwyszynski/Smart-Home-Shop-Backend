@@ -1,18 +1,5 @@
 package com.kodilla.smarthomeshop.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
+public record UserDto(Long userId, String userName, String userSurname, String email, String address, String password) {
 
-@AllArgsConstructor
-@Getter
-@EqualsAndHashCode
-public class UserDto {
-
-    private Long userId;
-    private String userName;
-    private String userSurname;
-    private String email;
-    private String address;
-    private String password;
 }

@@ -1,5 +1,6 @@
 package com.kodilla.smarthomeshop.mapper;
 
+import com.kodilla.smarthomeshop.domain.CreateProductDto;
 import com.kodilla.smarthomeshop.domain.Product;
 import com.kodilla.smarthomeshop.domain.ProductDto;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,8 @@ public class ProductMapper {
                     .toList();
     }
 
-    public Product mapToProduct (final ProductDto productDto) {
+    public Product mapToProduct (final CreateProductDto productDto) {
         return new Product(
-                productDto.component_id(),
                 productDto.brand(),
                 productDto.model(),
                 productDto.voltage(),
@@ -41,6 +41,21 @@ public class ProductMapper {
                 product.getUrl(),
                 product.getType());
     }
+
+    public CreateProductDto mapToCreateProductDto(Product saved) {
+        return new CreateProductDto(
+            saved.getBrand(),
+            saved.getModel(),
+            saved.getVoltage(),
+            saved.getPower(),
+            saved.getProtocol(),
+            saved.getCurrent(),
+            saved.getPrice(),
+            saved.getUrl(),
+            saved.getType());
+    }
+
+
 }
 
 

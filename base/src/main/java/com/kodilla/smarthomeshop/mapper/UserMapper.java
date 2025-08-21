@@ -1,5 +1,6 @@
 package com.kodilla.smarthomeshop.mapper;
 
+import com.kodilla.smarthomeshop.domain.CreateUserDto;
 import com.kodilla.smarthomeshop.domain.User;
 import com.kodilla.smarthomeshop.domain.UserDto;
 import org.springframework.stereotype.Service;
@@ -14,14 +15,13 @@ public class UserMapper {
                 .toList();
     }
 
-    public User mapToUser(UserDto userDto) {
+    public User mapToUser(CreateUserDto userDto) {
         return new User(
-            userDto.getUserId(),
-            userDto.getUserName(),
-            userDto.getUserSurname(),
-            userDto.getEmail(),
-            userDto.getAddress(),
-            userDto.getPassword()
+            userDto.userName(),
+            userDto.userSurname(),
+            userDto.email(),
+            userDto.address(),
+            userDto.password()
         );
     }
 

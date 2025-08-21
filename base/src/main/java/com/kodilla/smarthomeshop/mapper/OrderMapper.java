@@ -1,5 +1,6 @@
 package com.kodilla.smarthomeshop.mapper;
 
+import com.kodilla.smarthomeshop.domain.CreateOrderDto;
 import com.kodilla.smarthomeshop.domain.Order;
 import com.kodilla.smarthomeshop.domain.OrderDto;
 import com.kodilla.smarthomeshop.repository.UserRepository;
@@ -19,9 +20,8 @@ public class OrderMapper {
                 .toList();
     }
 
-    public Order mapToOrder(OrderDto orderDto) {
+    public Order mapToOrder(CreateOrderDto orderDto) {
         return new Order(
-                orderDto.OrderId(),
                 orderDto.userId(),
                 orderDto.orderStatus(),
                 orderDto.orderDate(),

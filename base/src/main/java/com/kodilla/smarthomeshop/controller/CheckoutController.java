@@ -1,9 +1,6 @@
 package com.kodilla.smarthomeshop.controller;
 
-import com.kodilla.smarthomeshop.domain.AllCheckoutDto;
-import com.kodilla.smarthomeshop.domain.Checkout;
-import com.kodilla.smarthomeshop.domain.CheckoutDto;
-import com.kodilla.smarthomeshop.domain.CheckoutSuccessfullyDeleted;
+import com.kodilla.smarthomeshop.domain.*;
 import com.kodilla.smarthomeshop.mapper.CheckoutMapper;
 import com.kodilla.smarthomeshop.service.CheckoutService;
 import jakarta.validation.Valid;
@@ -37,14 +34,14 @@ public class CheckoutController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CheckoutDto> createCheckout(@RequestBody @Valid CheckoutDto checkoutDto) {
+    public ResponseEntity<CreateCheckoutDto> createCheckout(@RequestBody @Valid CreateCheckoutDto checkoutDto) {
         Checkout checkout = checkoutMapper.mapToCheckout(checkoutDto);
         checkoutService.saveCheckout(checkout);
         return ResponseEntity.ok(checkoutDto);
     }
 
     @PutMapping
-    public ResponseEntity<CheckoutDto> updateCheckout(@RequestBody @Valid CheckoutDto checkoutDto) {
+    public ResponseEntity<CheckoutDto> updateCheckout(@RequestBody @Valid CreateCheckoutDto checkoutDto) {
         Checkout checkout = checkoutMapper.mapToCheckout(checkoutDto);
         Checkout savedCheckout = checkoutService.saveCheckout(checkout);
         return ResponseEntity.ok(checkoutMapper.mapToCheckoutDto(savedCheckout));

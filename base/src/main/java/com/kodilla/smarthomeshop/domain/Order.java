@@ -12,11 +12,11 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity(name = "orders")
-public class Order {
+public class Order extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "order_id")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "order_seq")
+    @SequenceGenerator(name = "order_seq", sequenceName = "order_seq", allocationSize = 1)
     private Long OrderId;
 
     @Column(name = "user_id", nullable = false)
@@ -28,4 +28,11 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Checkout> orderedItems = new ArrayList<>();
+
+    public Order(Long userId, String orderStatus, String orderDate, List<Checkout> orderedItems) {
+        this.userId = userId;
+        this.orderStatus = orderStatus;
+        this.orderDate = orderDate;
+        this.orderedItems = orderedItems;
+    }
 }

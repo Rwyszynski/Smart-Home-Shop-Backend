@@ -1,5 +1,6 @@
 package com.kodilla.smarthomeshop.mapper;
 
+import com.kodilla.smarthomeshop.domain.CreateCheckoutDto;
 import com.kodilla.smarthomeshop.domain.Checkout;
 import com.kodilla.smarthomeshop.domain.CheckoutDto;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,8 @@ public class CheckoutMapper {
                 .toList();
     }
 
-    public Checkout mapToCheckout(CheckoutDto checkoutDto) {
+    public Checkout mapToCheckout(CreateCheckoutDto checkoutDto) {
         return new Checkout(
-                checkoutDto.id(),
                 checkoutDto.user(),
                 checkoutDto.product(),
                 checkoutDto.quantity(),

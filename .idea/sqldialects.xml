@@ -6,5 +6,8 @@
     <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V3__create_users_table.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V4__create_checkout_table.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V5__filll_component_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V6__add_uuid_column_to_all_entities.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V7__add_created_column_to_all_entities.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/base/src/main/resources/db.migration/V8__add__version_to_all_tables.sql" dialect="PostgreSQL" />
   </component>
 </project>

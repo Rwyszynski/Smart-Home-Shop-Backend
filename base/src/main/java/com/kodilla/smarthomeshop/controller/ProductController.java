@@ -33,17 +33,18 @@ public class ProductController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<CreateProductDto> createProduct(@RequestBody CreateProductDto productDto) {
         Product product = productMapper.mapToProduct(productDto);
-        productService.save(product);
-        return ResponseEntity.ok(productDto);
+        product.setComponent_id(null);
+        Product saved = productService.save(product);
+        return ResponseEntity.ok(productMapper.mapToCreateProductDto(saved));
     }
 
     @PutMapping
-    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) {
+    public ResponseEntity<CreateProductDto> updateProduct(@RequestBody CreateProductDto productDto) {
         Product product = productMapper.mapToProduct(productDto);
         Product savedProduct = productService.save(product);
-        return ResponseEntity.ok(productMapper.mapToProductDto(savedProduct));
+        return ResponseEntity.ok(productMapper.mapToCreateProductDto(savedProduct));
     }
 
     @DeleteMapping(value = "/{productId}")

@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DatabaseMigrationSettings" lastSelectedDirectory="base\src\main\resources\db.migration" />
+  <component name="JpaLiquibaseChangesConfig">
+    <exclude-change idName="users_seq" tagName="dropSequence" />
+    <exclude-change idName="component_seq" tagName="dropSequence" />
+    <exclude-change idName="checkout#uuid" tagName="addColumn" />
+  </component>
 </project>

@@ -1,9 +1,6 @@
 package com.kodilla.smarthomeshop.controller;
 
-import com.kodilla.smarthomeshop.domain.AllOrderDto;
-import com.kodilla.smarthomeshop.domain.Order;
-import com.kodilla.smarthomeshop.domain.OrderDto;
-import com.kodilla.smarthomeshop.domain.OrderSuccessfullyDeleted;
+import com.kodilla.smarthomeshop.domain.*;
 import com.kodilla.smarthomeshop.mapper.OrderMapper;
 import com.kodilla.smarthomeshop.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -35,7 +32,7 @@ public class OrderController {
     }
 
     @PutMapping
-    public ResponseEntity<OrderDto> updateOrder(@RequestBody OrderDto orderDto) {
+    public ResponseEntity<OrderDto> updateOrder(@RequestBody CreateOrderDto orderDto) {
         Order order = orderMapper.mapToOrder(orderDto);
         Order savedOrder = orderService.save(order);
         return ResponseEntity.ok(orderMapper.mapToOrderDto(savedOrder));
