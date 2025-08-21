@@ -2,19 +2,19 @@ package com.kodilla.smarthomeshop.component;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 @RequiredArgsConstructor
 @Component
 public class CurrencyApi {
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
 
     public double getEuroExchangeRate() throws Exception {
-        CurrencyData data = restTemplate.getForObject(
-                "https://api.nbp.pl/api/exchangerates/rates/a/eur/?format=json",
-                CurrencyData.class
-        );
+        CurrencyData data = restClient.get()
+                .uri("https://api.nbp.pl/api/exchangerates/rates/a/eur/?format=json")
+                .retrieve()
+                .body(CurrencyData.class);
 
         if (data != null && data.getRates() != null && !data.getRates().isEmpty()) {
             return data.getRates().get(0).getMid();

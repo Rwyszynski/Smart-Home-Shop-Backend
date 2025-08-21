@@ -1,17 +1,17 @@
 package com.kodilla.smarthomeshop.component;
 
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
+
 @Component
 @RequiredArgsConstructor
 public class WeatherApi {
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
 
     @Value("${weather.api.endpoint}")
     private String weatherApiEndpoint;
@@ -27,7 +27,11 @@ public class WeatherApi {
                 .encode()
                 .toUri();
 
-        WeatherResponse response = restTemplate.getForObject(url, WeatherResponse.class);
+        WeatherResponse response = restClient.get()
+                .uri(url)
+                .retrieve()
+                .body(WeatherResponse.class);
+
         return response.getCurrent().getTemperature();
     }
 }
