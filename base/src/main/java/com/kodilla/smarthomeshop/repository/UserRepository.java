@@ -20,5 +20,4 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     User findByEmail(String email);
 
-    User findFirstByUserName(String userName);
 }

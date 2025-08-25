@@ -5,7 +5,10 @@ import com.kodilla.smarthomeshop.domain.User;
 import com.kodilla.smarthomeshop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Component
@@ -36,6 +39,12 @@ public class UserService {
 
     public Integer getUserById(Long userId) {
         return userId.intValue();
+    }
+
+    public List<User> getAllUsersWithNoPermission() {
+        return userRepository.findAll().stream()
+                .filter(user -> "normal".equals(user.getRole()))
+                .collect(Collectors.toList());
     }
 }
 

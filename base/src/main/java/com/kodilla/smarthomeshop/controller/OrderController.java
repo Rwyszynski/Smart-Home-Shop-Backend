@@ -49,4 +49,10 @@ public class OrderController {
         Order createdOrder = orderService.createOrderFromCheckout(userId);
         return ResponseEntity.ok(orderMapper.mapToOrderDto(createdOrder));
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AllOrderDto> getOrdersByUserId(@PathVariable Long id) throws OrderNotFoundException {
+        List<Order> ordersByUser = orderService.getAllOrdersByUserId(id);
+        return ResponseEntity.ok(new AllOrderDto(orderMapper.mapToOrderDtoList(ordersByUser)));
+    }
 }

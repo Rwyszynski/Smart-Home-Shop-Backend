@@ -19,4 +19,9 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
     @Override
     Product save(Product product);
+
+    List<Product> findByType(String type);
+
+    List<Product> findByBrandIgnoreCaseContainingOrModelIgnoreCaseContaining(String brand, String model);
+
 }

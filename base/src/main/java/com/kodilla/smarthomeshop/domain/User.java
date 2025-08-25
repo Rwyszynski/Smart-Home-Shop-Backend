@@ -22,12 +22,14 @@ public class User extends BaseEntity {
     private String email;
     private String address;
     private String password;
+    private String role;
 
-    public User(String userName, String userSurname, String email, String address, String password) {
+    public User(String userName, String userSurname, String email, String address, String password, String role) {
         this.userName = userName;
         this.userSurname = userSurname;
         this.email = email;
         this.address = address;
         this.password = password;
+        this.role = role;
     }
 }

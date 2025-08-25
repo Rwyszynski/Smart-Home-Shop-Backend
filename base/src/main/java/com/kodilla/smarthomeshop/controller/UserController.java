@@ -61,4 +61,10 @@ public class UserController {
         }
         return ResponseEntity.ok(userMapper.mapToUserDto(user));
     }
+
+    @GetMapping("/standard")
+    public ResponseEntity<AllUsersDto> getAllUsersWithNoPermissions() {
+        List<User> users = userService.getAllUsersWithNoPermission();
+        return ResponseEntity.ok(new AllUsersDto(userMapper.mapToUserDtoList(users)));
+    }
 }

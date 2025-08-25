@@ -58,4 +58,13 @@ public class CheckoutController {
         Checkout createdCheckout = checkoutService.createCheckoutFromProduct(productId);
         return ResponseEntity.ok(checkoutMapper.mapToCheckoutDto(createdCheckout));
     }
+
+    @GetMapping("/ordered")
+    public ResponseEntity<AllCheckoutDto> getOrderedCheckouts(
+            @RequestParam(required = false) Boolean ordered) {
+        List<Checkout> checkouts = checkoutService.getOrderedCheckouts(ordered);
+        return ResponseEntity.ok(
+                new AllCheckoutDto(checkoutMapper.mapToCheckoutDtoList(checkouts))
+        );
+    }
 }

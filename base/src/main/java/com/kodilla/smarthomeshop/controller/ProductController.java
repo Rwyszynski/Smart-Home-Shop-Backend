@@ -52,4 +52,16 @@ public class ProductController {
         productService.deleteProduct(productId);
         return ResponseEntity.ok(new ProductSuccessfullyDeleted("Usunięto produkt z id " + productId));
     }
+
+    @GetMapping("/{type}")
+    public ResponseEntity<AllProductDto> getProductsByType(@PathVariable String type) {
+        List<Product> productByType = productService.getProductsByType(type);
+        return ResponseEntity.ok(new AllProductDto(productMapper.mapToProductDtoList(productByType)));
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<AllProductDto> getProductsByName(@PathVariable String name) {
+        List<Product> productByName = productService.getProductsByName(name);
+        return ResponseEntity.ok(new AllProductDto(productMapper.mapToProductDtoList(productByName)));
+    }
 }

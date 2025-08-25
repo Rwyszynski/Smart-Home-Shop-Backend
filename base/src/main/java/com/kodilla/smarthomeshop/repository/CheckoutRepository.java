@@ -25,4 +25,8 @@ public interface CheckoutRepository extends CrudRepository<Checkout, Long> {
     Optional<Checkout> findByUserAndProductAndIsOrderedFalse(User user, Product product);
 
     List<Checkout> findByUser(User user);
+
+    List<Checkout> findByIsOrdered(Boolean isOrdered);
+
+    List<Checkout> findAll();
 }

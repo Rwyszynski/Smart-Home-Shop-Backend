@@ -60,6 +60,11 @@ public class OrderService {
         }
         return orderRepository.save(order);
     }
+
+    public List<Order> getAllOrdersByUserId(Long id) {
+        List<Order> userOrders = orderRepository.findByCustomerId(id);
+        return userOrders;
+    }
 }
 
 

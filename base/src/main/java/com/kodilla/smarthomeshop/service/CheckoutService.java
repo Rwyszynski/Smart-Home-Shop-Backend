@@ -60,4 +60,12 @@ public class CheckoutService {
         checkout.setOrdered(false);
         return checkoutRepository.save(checkout);
     }
+
+    public List<Checkout> getOrderedCheckouts(Boolean ordered) {
+        if (ordered == null) {
+            return checkoutRepository.findAll();
+        }
+        return checkoutRepository.findByIsOrdered(ordered);
+    }
+
 }

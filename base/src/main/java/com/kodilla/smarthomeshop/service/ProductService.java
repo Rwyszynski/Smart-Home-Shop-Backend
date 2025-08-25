@@ -6,7 +6,10 @@ import com.kodilla.smarthomeshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -26,5 +29,13 @@ public class ProductService {
 
     public void deleteProduct(Long productId) throws ProductNotFoundException {
         productRepository.deleteById(productId);
+    }
+
+    public List<Product> getProductsByType(String type) {
+        return productRepository.findByType(type);
+    }
+
+    public List<Product> getProductsByName(String name) {
+        return productRepository.findByBrandIgnoreCaseContainingOrModelIgnoreCaseContaining(name, name);
     }
 }
