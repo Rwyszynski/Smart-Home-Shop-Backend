@@ -1,0 +1,68 @@
+package com.kodilla.smarthomeshop.domain.util;
+
+import com.kodilla.smarthomeshop.domain.dto.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
+@RequestMapping("/v1/users")
+@CrossOrigin("*")
+@RequiredArgsConstructor
+@RestController
+class UserController {
+
+    private final SmartHomeFacade smartHomeFacade;
+    private final UserMapper userMapper;
+
+    @GetMapping
+    public ResponseEntity<AllUsersDto> getAllUsers() {
+        List<User> users = smartHomeFacade.getAllUsers();
+        return ResponseEntity.ok(new AllUsersDto(userMapper.mapToUserDtoList(users)));
+    }
+
+    @GetMapping(value = "/{orderId}")
+    public ResponseEntity<UserDto> getUser(@PathVariable Long orderId) throws UserNotFoundException {
+        return ResponseEntity.ok(userMapper.mapToUserDto(smartHomeFacade.getUser(orderId)));
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity<UserSuccessfullyAdded> createUser(@RequestBody CreateUserDto userDto) {
+        User user = userMapper.mapToUser(userDto);
+        User savedUser = smartHomeFacade.saveUser(user);
+        Long id = savedUser.getUserId();
+        return ResponseEntity.ok(new UserSuccessfullyAdded("Zarejestrowano użytkownika z ID " + id));
+    }
+
+    @PutMapping
+    public ResponseEntity<UserDto> updateUser(@RequestBody CreateUserDto userDto) {
+        User user = userMapper.mapToUser(userDto);
+        User savedUser = smartHomeFacade.saveUser(user);
+        return ResponseEntity.ok(userMapper.mapToUserDto(savedUser));
+    }
+
+    @DeleteMapping(value = "/{userId}")
+    public ResponseEntity<UserSuccessfullyDeleted> deleteUser(@PathVariable Long userId) {
+        smartHomeFacade.deleteUser(userId);
+        return ResponseEntity.ok(new UserSuccessfullyDeleted( "Usunięto użytkownika z id " + userId));
+    }
+
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDto> login(@RequestBody UserDto userDto) {
+        User user = smartHomeFacade.findByEmail(userDto.email());
+        if (user == null) {
+            return ResponseEntity.status(401).body(null);
+        }
+        if (!user.getPassword().equals(userDto.password())) {
+            return ResponseEntity.status(401).body(null);
+        }
+        return ResponseEntity.ok(userMapper.mapToUserDto(user));
+    }
+
+    @GetMapping("/standard")
+    public ResponseEntity<AllUsersDto> getAllUsersWithNoPermissions() {
+        List<User> users = smartHomeFacade.getAllUsersWithNoPermission();
+        return ResponseEntity.ok(new AllUsersDto(userMapper.mapToUserDtoList(users)));
+    }
+}

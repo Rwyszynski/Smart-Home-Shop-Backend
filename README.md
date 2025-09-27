@@ -1,60 +1,79 @@
-
-
----
-
-# README.md
-
-````markdown
 # 📦 SmartHomeShop
 
+SmartHomeShop to aplikacja e-commerce do obsługi **inteligentnych urządzeń domowych**.  
+Pozwala zarządzać produktami, użytkownikami, zamówieniami i koszykiem zakupowym, a także integruje się z zewnętrznymi API (pogoda, waluty).
+
 ---
 
-## 🖥️ Technologies Used
+## 🖥️ Technologie
 
 - **Java 17+**
 - **Spring Boot**
 - **Gradle**
 - **Docker & Docker Compose**
 - **PostgreSQL**
-- **Flyway** (database migrations)
-- External APIs:
-  - Weather API
-  - Currency API
+- **Flyway** (migracje bazy danych)
+- **Lombok**
+- **Testcontainers + JUnit 5 + MockMvc** (testy)
+- Zewnętrzne API:
+    - **Weather API** 🌤️
+    - **Currency API** 💱
 
 ---
 
-## 🚀 Features
+## 🚀 Funkcjonalności
 
-- Manage smart home products (CRUD operations)
-- Handle user accounts
-- Create and manage orders
-- Checkout system (cart functionality)
-- Weather API integration (fetch current weather and temperature)
-- Currency API integration (for handling multi-currency prices)
+- Zarządzanie produktami (CRUD)
+- Obsługa użytkowników
+- Koszyk zakupowy + składanie zamówień
+- Integracja z pogodą i przelicznikiem walut
+- Obsługa wielu walut przy zakupach
+- Automatyczne migracje DB (Flyway)
+- Testy jednostkowe i integracyjne
 
 ---
 
-## 📂 Project Structure
+## 📂 Struktura projektu
 
 ```text
 SmartHomeShop/
 ├── base/
 │   └── src/main/java/com/kodilla/smarthomeshop/
-│       ├── controller/        # REST controllers (API endpoints)
-│       ├── domain/            # Entities and DTOs
-│       ├── component/         # External integrations (Weather, Currency)
-│       ├── config/            # Application configuration
+│       ├── controller/        # REST API
+│       ├── domain/            # Encje i DTO
+│       ├── component/         # Integracje z API zewnętrznymi
+│       ├── config/            # Konfiguracja aplikacji
 │       └── SmartHomeShopApplication.java
-├── docker-compose.yml          # Docker setup
+├── src/test/java/              # Testy JUnit / MockMvc / Testcontainers
+├── docker-compose.yml          # Konfiguracja Dockera
 ├── build.gradle / settings.gradle
-└── gradlew / gradlew.bat       # Gradle wrappers
-````
+└── gradlew / gradlew.bat
+```
 
 ---
 
-## 🛠️ Installation & Running
+## ⚙️ Konfiguracja środowiska
 
-### Using Gradle
+Aplikacja korzysta z **plików konfiguracyjnych Spring Boot** (`application.yml`).
+
+Możesz też stworzyć plik `.env` dla Dockera:
+
+```env
+POSTGRES_DB=smarthomeshop
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
+SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/smarthomeshop
+SPRING_DATASOURCE_USERNAME=postgres
+SPRING_DATASOURCE_PASSWORD=postgres
+WEATHER_API_KEY=your_api_key_here
+CURRENCY_API_KEY=your_api_key_here
+```
+
+---
+
+## 🛠️ Instalacja i uruchomienie
+
+### 🔹 Gradle
 
 ```bash
 git clone https://github.com/your-username/SmartHomeShop.git
@@ -63,134 +82,144 @@ cd SmartHomeShop
 ./gradlew bootRun
 ```
 
-👉 App will be available at: `http://localhost:8080`
+👉 Aplikacja dostępna pod: `http://localhost:8080`
 
-### Using Docker
+### 🔹 Docker
 
 ```bash
 docker-compose up --build
 ```
 
-👉 App will be available at: `http://localhost:8080`
+👉 Aplikacja dostępna pod: `http://localhost:8080`
 
 ---
 
-## 🌐 API Endpoints
+## 🌐 API – pełna lista endpointów
 
-### Products
+> **Prefiksy ścieżek**: większość zasobów działa pod **`/v1/*`**, natomiast usługa pogody pod **`/api/weather`**.  
+> **Paginacja** (tam gdzie dostępna): parametry `page`, `size`, `sort` (Spring Pageable).
 
-| Method | Endpoint                | Description        |
-| ------ | ----------------------- | ------------------ |
-| GET    | `/products`             | Get all products   |
-| GET    | `/products/{productId}` | Get product by ID  |
-| POST   | `/products`             | Create new product |
-| PUT    | `/products`             | Update product     |
-| DELETE | `/products/{productId}` | Delete product     |
+### 🧩 Produkty (`/v1/products`)
 
-### Orders
+| Metoda | Ścieżka                               | Opis |
+|-------:|---------------------------------------|------|
+| GET    | `/v1/products`                        | Pobierz listę produktów (paginacja) |
+| GET    | `/v1/products/{productId}`            | Pobierz produkt po ID |
+| POST   | `/v1/products`                        | Utwórz nowy produkt |
+| PUT    | `/v1/products`                        | Zaktualizuj produkt |
+| DELETE | `/v1/products/{productId}`            | Usuń produkt |
+| GET    | `/v1/products/{type}`                 | Pobierz produkty po **typie** |
+| GET    | `/v1/products/{name}`                 | Pobierz produkty po **nazwie** |
 
-| Method | Endpoint                        | Description                |
-| ------ | ------------------------------- | -------------------------- |
-| GET    | `/orders`                       | Get all orders             |
-| GET    | `/orders/{orderId}`             | Get order by ID            |
-| POST   | `/orders/fromCheckout/{userId}` | Create order from checkout |
-| PUT    | `/orders`                       | Update order               |
-| DELETE | `/orders/{orderId}`             | Delete order               |
+> ℹ️ **Uwaga:** dwa ostatnie endpointy mają taki sam wzorzec ścieżki (`/{...}`) jak pobieranie po ID – może to powodować niejednoznaczność rozwiązywaną kolejnością metod w kontrolerze.
 
-### Checkout
+### 🧾 Zamówienia (`/v1/orders`)
 
-| Method | Endpoint                            | Description                  |
-| ------ | ----------------------------------- | ---------------------------- |
-| GET    | `/checkout`                         | Get all checkouts            |
-| GET    | `/checkout/{checkoutId}`            | Get checkout by ID           |
-| POST   | `/checkout`                         | Create new checkout          |
-| POST   | `/checkout/fromProduct/{productId}` | Create checkout from product |
-| PUT    | `/checkout`                         | Update checkout              |
-| DELETE | `/checkout/{checkoutId}`            | Delete checkout              |
+| Metoda | Ścieżka                               | Opis |
+|-------:|---------------------------------------|------|
+| GET    | `/v1/orders`                          | Pobierz listę zamówień (paginacja) |
+| GET    | `/v1/orders/{orderId}`                | Pobierz zamówienie po ID |
+| POST   | `/v1/orders/fromCheckout/{userId}`    | Utwórz zamówienie z koszyka użytkownika |
+| PUT    | `/v1/orders`                          | Zaktualizuj zamówienie |
+| DELETE | `/v1/orders/{orderId}`                | Usuń zamówienie |
+| GET    | `/v1/orders/{id}`                     | Pobierz **zamówienia użytkownika** po jego ID |
 
-### Users
+> ℹ️ **Uwaga:** ostatni endpoint (`/{id}`) koliduje wzorcem z `/{orderId}` – to również może być niejednoznaczne w rutingu.
 
-| Method | Endpoint          | Description     |
-| ------ | ----------------- | --------------- |
-| GET    | `/users`          | Get all users   |
-| GET    | `/users/{userId}` | Get user by ID  |
-| POST   | `/users`          | Create new user |
-| PUT    | `/users`          | Update user     |
-| DELETE | `/users/{userId}` | Delete user     |
+### 🛒 Koszyki / Checkouts (`/v1/checkouts`)
 
-### Weather
+| Metoda | Ścieżka                                      | Opis |
+|-------:|----------------------------------------------|------|
+| GET    | `/v1/checkouts`                              | Pobierz listę koszyków (paginacja) |
+| GET    | `/v1/checkouts/{checkoutId}`                 | Pobierz koszyk po ID |
+| GET    | `/v1/checkouts/ordered?ordered=true|false`   | Pobierz koszyki po statusie „zamówiony” |
+| POST   | `/v1/checkouts`                              | Utwórz nowy koszyk |
+| POST   | `/v1/checkouts/fromProduct/{productId}`      | Utwórz koszyk na podstawie produktu |
+| PUT    | `/v1/checkouts`                              | Zaktualizuj koszyk |
+| DELETE | `/v1/checkouts/{checkoutId}`                 | Usuń koszyk |
 
-| Method | Endpoint               | Description             |
-| ------ | ---------------------- | ----------------------- |
-| GET    | `/weather`             | Get current weather     |
-| GET    | `/weather/temperature` | Get current temperature |
+### 👤 Użytkownicy (`/v1/users`)
+
+| Metoda | Ścieżka                    | Opis |
+|-------:|----------------------------|------|
+| GET    | `/v1/users`                | Pobierz listę użytkowników |
+| GET    | `/v1/users/{userId}`       | Pobierz użytkownika po ID |
+| POST   | `/v1/users`                | Utwórz użytkownika |
+| PUT    | `/v1/users`                | Zaktualizuj użytkownika |
+| DELETE | `/v1/users/{userId}`       | Usuń użytkownika |
+| POST   | `/v1/users/login`          | Logowanie (email + hasło) |
+| GET    | `/v1/users/standard`       | Lista użytkowników bez uprawnień |
+
+> ℹ️ W kodzie parametr ścieżki w `GET /v1/users/{userId}` bywa nazwany `orderId`, jednak reprezentuje **ID użytkownika**.
+
+### 🌦️ Pogoda (`/api/weather`)
+
+| Metoda | Ścieżka                     | Opis |
+|-------:|-----------------------------|------|
+| GET    | `/api/weather`              | Bieżąca temperatura jako tekst |
+| GET    | `/api/weather/temperature`  | Bieżąca temperatura jako liczba |
 
 ---
 
-## 📌 Example Requests (cURL)
-
-### 🔹 Products
+## 📌 Przykładowe zapytania (cURL)
 
 ```bash
-# Get all products
-curl -X GET http://localhost:8080/products
+# Produkty
+curl -X GET "http://localhost:8080/v1/products?page=0&size=10"
+curl -X GET "http://localhost:8080/v1/products/1"
+curl -X POST "http://localhost:8080/v1/products"   -H "Content-Type: application/json"   -d '{"brand":"Acme","model":"Smart Bulb","price":29.99,"type":"BULB"}'
 
-# Get product by ID
-curl -X GET http://localhost:8080/products/1
+# Zamówienia
+curl -X GET "http://localhost:8080/v1/orders"
+curl -X POST "http://localhost:8080/v1/orders/fromCheckout/1"
 
-# Create new product
-curl -X POST http://localhost:8080/products \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Smart Bulb", "price": 29.99, "description": "Wi-Fi LED bulb"}'
+# Checkouts
+curl -X GET "http://localhost:8080/v1/checkouts?size=20"
+curl -X GET "http://localhost:8080/v1/checkouts/ordered?ordered=true"
+curl -X POST "http://localhost:8080/v1/checkouts/fromProduct/1"
 
-# Update product
-curl -X PUT http://localhost:8080/products \
-  -H "Content-Type: application/json" \
-  -d '{"id": 1, "name": "Smart Bulb v2", "price": 34.99}'
+# Użytkownicy
+curl -X POST "http://localhost:8080/v1/users"   -H "Content-Type: application/json"   -d '{"name":"Alice","email":"alice@example.com","password":"secret"}'
+curl -X POST "http://localhost:8080/v1/users/login"   -H "Content-Type: application/json"   -d '{"email":"alice@example.com","password":"secret"}'
 
-# Delete product
-curl -X DELETE http://localhost:8080/products/1
+# Pogoda
+curl -X GET "http://localhost:8080/api/weather"
+curl -X GET "http://localhost:8080/api/weather/temperature"
 ```
 
-### 🔹 Orders
+---
 
+## 🧪 Testy
+
+- **JUnit 5** – testy logiki biznesowej
+- **MockMvc** – testy warstwy kontrolerów
+- **Testcontainers** – uruchamianie PostgreSQL w izolowanym kontenerze do testów
+
+Uruchomienie testów:
 ```bash
-# Get all orders
-curl -X GET http://localhost:8080/orders
-
-# Create order from checkout
-curl -X POST http://localhost:8080/orders/fromCheckout/1
+./gradlew test
 ```
 
-### 🔹 Checkout
+---
 
-```bash
-# Get all checkouts
-curl -X GET http://localhost:8080/checkout
+## 🚀 Deployment
 
-# Create checkout from product
-curl -X POST http://localhost:8080/checkout/fromProduct/1
-```
+- **Docker Hub** (obrazy Dockera)
+- **Heroku / Railway** (deploy w chmurze)
+- **Kubernetes** (jeśli użyjesz manifestów)
 
-### 🔹 Users
+---
 
-```bash
-# Create user
-curl -X POST http://localhost:8080/users \
-  -H "Content-Type: application/json" \
-  -d '{"name": "Alice", "email": "alice@example.com"}'
-```
+## 🤝 Contribution
 
-### 🔹 Weather
+1. Zrób fork repozytorium
+2. Utwórz nowy branch (`feature/my-feature`)
+3. Commituj zmiany (`git commit -m 'Add new feature'`)
+4. Wypchnij branch (`git push origin feature/my-feature`)
+5. Stwórz Pull Request
 
-```bash
-# Get current weather
-curl -X GET http://localhost:8080/weather
+---
 
-# Get temperature
-curl -X GET http://localhost:8080/weather/temperature
-```
+## 📜 Licencja
 
-
-
-```
+MIT License © 2025
