@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity(name = "checkout")
-public class Checkout extends BaseEntity {
+class Checkout extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "checkout_seq")

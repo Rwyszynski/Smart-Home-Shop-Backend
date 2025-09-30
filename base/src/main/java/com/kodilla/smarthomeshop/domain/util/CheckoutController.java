@@ -1,9 +1,7 @@
 package com.kodilla.smarthomeshop.domain.util;
 
 import com.kodilla.smarthomeshop.domain.dto.AllCheckoutDto;
-import com.kodilla.smarthomeshop.domain.dto.CheckoutDto;
 import com.kodilla.smarthomeshop.domain.dto.CheckoutSuccessfullyDeleted;
-import com.kodilla.smarthomeshop.domain.dto.CreateCheckoutDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +48,7 @@ class CheckoutController {
 
     @DeleteMapping(value = "/{checkoutId}")
     public ResponseEntity<CheckoutSuccessfullyDeleted> deleteCheckout(@PathVariable Long checkoutId) throws CheckoutNotFoundException {
-        smartHomeFacade.deleteProduct(checkoutId);
+        smartHomeFacade.deleteProductByOrderId(checkoutId);
         return ResponseEntity.ok(new CheckoutSuccessfullyDeleted("Usunięto Koszyk z id: " + checkoutId));
     }
 

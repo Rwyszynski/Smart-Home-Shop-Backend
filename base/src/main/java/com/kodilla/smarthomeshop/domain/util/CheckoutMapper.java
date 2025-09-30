@@ -1,7 +1,5 @@
 package com.kodilla.smarthomeshop.domain.util;
 
-import com.kodilla.smarthomeshop.domain.dto.CreateCheckoutDto;
-import com.kodilla.smarthomeshop.domain.dto.CheckoutDto;
 import lombok.Builder;
 import org.springframework.stereotype.Service;
 import java.util.List;

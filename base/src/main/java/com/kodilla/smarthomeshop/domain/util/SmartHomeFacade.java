@@ -7,14 +7,14 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor(access = lombok.AccessLevel.PACKAGE)
-public class SmartHomeFacade {
+class SmartHomeFacade {
 
     private final CheckoutService checkoutService;
     private final OrderService orderService;
     private final ProductService productService;
     private final UserService userService;
 
-    public void deleteProducts(Long orderId) {
+    public void deleteProductByOrderId(Long orderId) {
         orderService.deleteProduct(orderId);
     }
 

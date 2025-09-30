@@ -1,6 +1,4 @@
-package com.kodilla.smarthomeshop.domain.dto;
-
-import com.kodilla.smarthomeshop.domain.util.Checkout;
+package com.kodilla.smarthomeshop.domain.util;
 
 import java.util.List;
 

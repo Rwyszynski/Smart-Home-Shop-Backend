@@ -9,7 +9,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity(name = "users")
-public class User extends BaseEntity {
+class User extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_seq")

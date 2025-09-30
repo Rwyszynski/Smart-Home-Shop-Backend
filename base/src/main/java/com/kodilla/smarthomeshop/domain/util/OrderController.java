@@ -1,8 +1,6 @@
 package com.kodilla.smarthomeshop.domain.util;
 
 import com.kodilla.smarthomeshop.domain.dto.AllOrderDto;
-import com.kodilla.smarthomeshop.domain.dto.CreateOrderDto;
-import com.kodilla.smarthomeshop.domain.dto.OrderDto;
 import com.kodilla.smarthomeshop.domain.dto.OrderSuccessfullyDeleted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -41,7 +39,7 @@ class OrderController {
 
     @DeleteMapping(value = "/{orderId}")
     public ResponseEntity<OrderSuccessfullyDeleted> deleteOrder(@PathVariable Long orderId) {
-        smartHomeFacade.deleteProducts(orderId);
+        smartHomeFacade.deleteProduct(orderId);
         return ResponseEntity.ok(new OrderSuccessfullyDeleted("Usunięto zamówienie z id: " + orderId));
     }
 

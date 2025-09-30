@@ -2,7 +2,6 @@ package com.kodilla.smarthomeshop.domain.util;
 
 import com.kodilla.smarthomeshop.domain.dto.AllProductDto;
 import com.kodilla.smarthomeshop.domain.dto.CreateProductDto;
-import com.kodilla.smarthomeshop.domain.dto.ProductDto;
 import com.kodilla.smarthomeshop.domain.dto.ProductSuccessfullyDeleted;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

@@ -1,7 +1,6 @@
 package com.kodilla.smarthomeshop.domain.util;
 
 import com.kodilla.smarthomeshop.domain.dto.CreateProductDto;
-import com.kodilla.smarthomeshop.domain.dto.ProductDto;
 import org.springframework.stereotype.Service;
 import java.util.List;
 

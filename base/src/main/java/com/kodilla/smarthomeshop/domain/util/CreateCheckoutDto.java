@@ -1,8 +1,5 @@
-package com.kodilla.smarthomeshop.domain.dto;
+package com.kodilla.smarthomeshop.domain.util;
 
-import com.kodilla.smarthomeshop.domain.util.Order;
-import com.kodilla.smarthomeshop.domain.util.Product;
-import com.kodilla.smarthomeshop.domain.util.User;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 

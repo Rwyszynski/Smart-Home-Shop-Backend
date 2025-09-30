@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @Entity(name = "component")
-public class Product extends BaseEntity {
+class Product extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "component_seq")
