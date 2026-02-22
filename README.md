@@ -220,6 +220,5 @@ Uruchomienie testów:
 
 ---
 
-## 📜 Licencja
-
-MIT License © 2025
+Link do serwera AWS
+http://ec2-54-74-4-134.eu-west-1.compute.amazonaws.com:8080
